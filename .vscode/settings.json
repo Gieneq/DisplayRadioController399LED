@@ -1,0 +1,19 @@
+{
+  "C_Cpp.intelliSenseEngine": "default",
+  "idf.espIdfPathWin": "C:/Espressif/frameworks/esp-idf-v5.1.2/",
+  "idf.pythonInstallPath": "C:\\Espressif\\tools\\idf-python\\3.11.2\\python.exe",
+  "idf.openOcdConfigs": [
+    "board/esp32c3-bridge.cfg"
+  ],
+  "idf.toolsPathWin": "C:\\Espressif",
+  "idf.customExtraVars": {
+    "IDF_TARGET": "esp32c3"
+  },
+  "idf.portWin": "COM4",
+  "idf.flashType": "UART",
+  "files.associations": {
+    "led_matrix.h": "c",
+    "esp_err.h": "c",
+    "ws2812b_grid.h": "c"
+  }
+}
