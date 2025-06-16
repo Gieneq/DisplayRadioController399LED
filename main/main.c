@@ -11,12 +11,14 @@
 #include "freertos/task.h"
 #include "esp_chip_info.h"
 #include "esp_flash.h"
+#include "nvs_flash.h"
 
 #include "esp_log.h"
 #include "esp_heap_caps.h"
 
 #include "gtypes.h"
 #include "leds/ws2812b_grid.h"
+#include "rf/rf_receiver.h"
 
 static const char TAG[] = "Main";
 
@@ -54,11 +56,22 @@ void app_main(void) {
     info_prints();
     ESP_LOGI(TAG, "Starting!");
 
+    ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        ESP_ERROR_CHECK( nvs_flash_erase() );
+        ret = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK( ret );
+
     workspace_led_matrix = heap_caps_calloc(1, sizeof(led_matrix_t ), MALLOC_CAP_DEFAULT);
     assert(workspace_led_matrix);
     
     ret = ws2812b_grid_init();
     ESP_ERROR_CHECK(ret);
+
+    ret = rf_receiver_init();
+    ESP_ERROR_CHECK(ret);
+
     ws2812b_grid_interface_t* grid_if = NULL;
 
     uint32_t idx = 0;
@@ -73,9 +86,9 @@ void app_main(void) {
                 idx ^= 1 + 4 + 16 + 64 + 256;
                 idx *= 17;
                 idx ^= 123;
-                led_matrix_access_pixel_at(workspace_led_matrix, idx_x, idx_y)->blue = idx & 0xFF;
-                led_matrix_access_pixel_at(workspace_led_matrix, idx_x, idx_y)->red = (idx>>8) & 0xFF;
-                led_matrix_access_pixel_at(workspace_led_matrix, idx_x, idx_y)->green = (idx>>16) & 0xFF;
+                led_matrix_access_pixel_at(workspace_led_matrix, idx_x, idx_y)->blue = idx & 0x0F;
+                led_matrix_access_pixel_at(workspace_led_matrix, idx_x, idx_y)->red = (idx>>8) & 0x0F;
+                led_matrix_access_pixel_at(workspace_led_matrix, idx_x, idx_y)->green = (idx>>16) & 0x0F;
             }
         }
 

@@ -4,11 +4,8 @@
 
 void led_matrix_init(led_matrix_t* led_matrix) {
     memset(led_matrix, 0, sizeof(led_matrix_t));
-
     led_matrix->columns = LED_MATRIX_COLUMNS;
     led_matrix->rows = LED_MATRIX_ROWS;
-    led_matrix->pixels_count = LED_MATRIX_PIXELS_COUNT;
-
 }
 
 void led_matrix_clear(led_matrix_t* led_matrix) {
