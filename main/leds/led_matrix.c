@@ -31,3 +31,11 @@ color_24b_t* led_matrix_access_pixel_at(led_matrix_t* led_matrix, uint16_t x, ui
 
     return led_matrix->pixels + (x + LED_MATRIX_COLUMNS * y);
 }
+
+const color_24b_t* led_matrix_access_pixel_at_const(const led_matrix_t* led_matrix, uint16_t x, uint16_t y) {
+    if ((x >= LED_MATRIX_COLUMNS) || (y >= LED_MATRIX_ROWS)) {
+        return NULL;
+    }
+
+    return led_matrix->pixels + (x + LED_MATRIX_COLUMNS * y);
+}

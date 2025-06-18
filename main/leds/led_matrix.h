@@ -27,6 +27,8 @@ void led_matrix_fill_color(led_matrix_t* led_matrix, color_24b_t color);
 
 color_24b_t* led_matrix_access_pixel_at(led_matrix_t* led_matrix, uint16_t x, uint16_t y);
 
+const color_24b_t* led_matrix_access_pixel_at_const(const led_matrix_t* led_matrix, uint16_t x, uint16_t y);
+
 #ifdef __cplusplus
 }
 #endif

@@ -19,6 +19,7 @@
 
 #include "../gtypes.h"
 #include "led_matrix.h"
+#include <math.h>
 
 #define LEDSTRIP_GPIO                   0
 
@@ -65,18 +66,24 @@ static const char TAG[] = "WS2812BGrid";
 static spi_device_handle_t spi;
 static spi_transaction_t transactions[TRANSACTIONS_COUNT];
 
+// Gamma correction LUT
+#define GAMMA_VALUE 2.2f
+static uint8_t gamma_correction_lut[256];
+
 static void ws2812b_grid_set_byte(uint16_t byte_index, uint8_t value) {
+    // Apply gamma correction
+    const uint8_t corrected_value = gamma_correction_lut[value];
 #if BIT_RESOLUTION == 8
     /* 1B takes 8B of transfer */
     for (uint8_t bit_idx = 0; bit_idx < 8; ++bit_idx) {
         transfer_buffer[byte_index * 8 + (8 - bit_idx - 1)] = 
-            (value & (1<<bit_idx)) > 0 ? CODE_BIT_HIGH : CODE_BIT_LOW;
+            (corrected_value & (1<<bit_idx)) > 0 ? CODE_BIT_HIGH : CODE_BIT_LOW;
     }
 #else
     /* 1B takes 4B of transfer */
     for (uint8_t bit_idx = 0; bit_idx < 8; ++bit_idx) {
         const uint8_t inv_bit_idx = 8 - bit_idx - 1;
-        const uint8_t code_value = (value & (1<<inv_bit_idx)) > 0 ? CODE_BIT_HIGH : CODE_BIT_LOW;
+        const uint8_t code_value = (corrected_value & (1<<inv_bit_idx)) > 0 ? CODE_BIT_HIGH : CODE_BIT_LOW;
         
         const uint16_t selected_byte_idx = bit_idx / 2;
 
@@ -132,7 +139,7 @@ static void ws2812b_draw_pixel_in_zigzak(uint16_t x, uint16_t y, uint8_t r, uint
 static void ws2812b_draw_matrix_in_zigzak(const led_matrix_t* led_matrix) {
     for (size_t ix = 0; ix < LEDS_GRID_W; ++ix) {
         for (size_t iy = 0; iy < LEDS_GRID_H; ++iy) {
-            const color_24b_t* color = led_matrix_access_pixel_at(led_matrix, ix, iy);
+            const color_24b_t* color = led_matrix_access_pixel_at_const(led_matrix, ix, iy);
             assert(color);
             ws2812b_draw_pixel_in_zigzak(ix, iy, color->red, color->green, color->blue);
         }
@@ -179,7 +186,16 @@ static void ws2812b_grid_task(void* params) {
     }
 }
 
+static void gamma_correction_lut_init() {
+    for (int i = 0; i < 256; i++) {
+        const float gamma_value = powf((float)i / 255.0f, GAMMA_VALUE) * 255.0f;
+        const float gamma_value_constrained = gamma_value > 255.0 ? 255.0 : (gamma_value < 0.0 ? 0.0 : gamma_value);
+        gamma_correction_lut[i] = (uint8_t)(roundf(gamma_value_constrained));
+    }
+}
+
 esp_err_t ws2812b_grid_init() {
+    gamma_correction_lut_init();
     led_matrix = heap_caps_calloc(1, sizeof(led_matrix_t), MALLOC_CAP_DEFAULT);
     assert(led_matrix);
     
