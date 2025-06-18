@@ -15,6 +15,12 @@
     "led_matrix.h": "c",
     "esp_err.h": "c",
     "ws2812b_grid.h": "c",
-    "esp_heap_caps.h": "c"
+    "esp_heap_caps.h": "c",
+    "rf_receiver.h": "c",
+    "asd_packets_processor.h": "c",
+    "random": "c",
+    "esp_netif.h": "c",
+    "asd_packet.h": "c",
+    "compare": "c"
   }
 }

@@ -5,6 +5,7 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 #include <inttypes.h>
 #include "sdkconfig.h"
 #include "freertos/FreeRTOS.h"
@@ -19,6 +20,7 @@
 #include "gtypes.h"
 #include "leds/ws2812b_grid.h"
 #include "rf/rf_receiver.h"
+#include "asd_packets_processor.h"
 
 static const char TAG[] = "Main";
 
@@ -51,6 +53,10 @@ static void info_prints() {
     printf("Minimum free heap size: %" PRIu32 " bytes\n", esp_get_minimum_free_heap_size());
 }
 
+void on_asd_packet_received_callback(const asd_packet_t* packet) {
+    asd_packets_processor_push_packet(packet);
+}
+
 void app_main(void) {
     esp_err_t ret = ESP_OK;
     info_prints();
@@ -69,8 +75,10 @@ void app_main(void) {
     ret = ws2812b_grid_init();
     ESP_ERROR_CHECK(ret);
 
-    ret = rf_receiver_init();
+    ret = rf_receiver_init(on_asd_packet_received_callback);
     ESP_ERROR_CHECK(ret);
+
+    asd_packets_processor_init();
 
     ws2812b_grid_interface_t* grid_if = NULL;
 
@@ -78,19 +86,24 @@ void app_main(void) {
 
     while(1) {
 
-        led_matrix_clear(workspace_led_matrix);
-
-        for (uint16_t idx_y = 0; idx_y < LED_MATRIX_ROWS; ++idx_y) {
-            for (uint16_t idx_x = 0; idx_x < LED_MATRIX_COLUMNS; ++idx_x) {
-                idx += 3;
-                idx ^= 1 + 4 + 16 + 64 + 256;
-                idx *= 17;
-                idx ^= 123;
-                led_matrix_access_pixel_at(workspace_led_matrix, idx_x, idx_y)->blue = idx & 0x0F;
-                led_matrix_access_pixel_at(workspace_led_matrix, idx_x, idx_y)->red = (idx>>8) & 0x0F;
-                led_matrix_access_pixel_at(workspace_led_matrix, idx_x, idx_y)->green = (idx>>16) & 0x0F;
-            }
+        const led_matrix_t* received_led_matrix = asd_packets_processor_poll_completed_led_matrix();
+        if (received_led_matrix != NULL) {
+            led_matrix_clear(workspace_led_matrix); // TODO remove
+            memcpy(workspace_led_matrix, received_led_matrix, sizeof(led_matrix_t));
         }
+        
+
+        // for (uint16_t idx_y = 0; idx_y < LED_MATRIX_ROWS; ++idx_y) {
+        //     for (uint16_t idx_x = 0; idx_x < LED_MATRIX_COLUMNS; ++idx_x) {
+        //         idx += 3;
+        //         idx ^= 1 + 4 + 16 + 64 + 256;
+        //         idx *= 17;
+        //         idx ^= 123;
+        //         led_matrix_access_pixel_at(workspace_led_matrix, idx_x, idx_y)->blue = idx & 0x0F;
+        //         led_matrix_access_pixel_at(workspace_led_matrix, idx_x, idx_y)->red = (idx>>8) & 0x0F;
+        //         led_matrix_access_pixel_at(workspace_led_matrix, idx_x, idx_y)->green = (idx>>16) & 0x0F;
+        //     }
+        // }
 
         if (ws2812b_grid_access(&grid_if, 100)) {
             grid_if->set_led_matrix_values(workspace_led_matrix);

@@ -6,6 +6,7 @@ extern "C" {
 
 #include "esp_err.h"
 #include "../gtypes.h"
+#include "asd_packet.h"
 
 #define ESPNOW_WIFI_MODE WIFI_MODE_STA
 #define ESPNOW_WIFI_IF   ESP_IF_WIFI_STA
@@ -24,7 +25,9 @@ extern "C" {
 //     uint32_t dummy;
 // } led_matrix_t;
 
-esp_err_t rf_receiver_init();
+typedef void (*rf_receiver_on_receive_asd_packet_t)(const asd_packet_t*);
+
+esp_err_t rf_receiver_init(rf_receiver_on_receive_asd_packet_t callback);
 
 #ifdef __cplusplus
 }

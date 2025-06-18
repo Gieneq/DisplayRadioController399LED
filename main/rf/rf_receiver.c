@@ -23,6 +23,8 @@ static uint8_t s_example_broadcast_mac[ESP_NOW_ETH_ALEN] = { 0xFF, 0xFF, 0xFF, 0
 
 #define IS_BROADCAST_ADDR(addr) (memcmp(addr, s_example_broadcast_mac, ESP_NOW_ETH_ALEN) == 0)
 
+static rf_receiver_on_receive_asd_packet_t on_asd_packet_callback = NULL;
+
 static void example_wifi_init(void) {
     ESP_ERROR_CHECK(esp_netif_init());
     ESP_ERROR_CHECK(esp_event_loop_create_default());
@@ -52,7 +54,22 @@ static void example_espnow_recv_cb(const esp_now_recv_info_t *recv_info, const u
          * encrypted as peer-to-peer message or unencrypted over the broadcast channel.
          * Users can check the destination address to distinguish it.
          */
-        ESP_LOGI(TAG, "Receive broadcast ESPNOW data");
+        ESP_LOGI(TAG, "Receive broadcast ESPNOW data len=%d/%u", len, sizeof(asd_packet_t));
+        if (len == sizeof(asd_packet_t)) {
+            const asd_packet_t* incomming_packet = (const asd_packet_t*)data;
+            ESP_LOGI(TAG, "  Got transfer=%lu, packet=%u/%u, data_size=%u", 
+                incomming_packet->transfer_idx,
+                incomming_packet->packet_idx,
+                incomming_packet->total_packets_count,
+                incomming_packet->data_size
+            );
+
+            if (on_asd_packet_callback != NULL) {
+                on_asd_packet_callback(incomming_packet);
+            }
+        }
+
+
     } else {
         ESP_LOGI(TAG, "Receive unicast ESPNOW data");
     }
@@ -87,8 +104,9 @@ static esp_err_t example_espnow_init(void) {
     return ESP_OK;
 }
 
-esp_err_t rf_receiver_init() {
+esp_err_t rf_receiver_init(rf_receiver_on_receive_asd_packet_t callback) {
     ESP_LOGI(TAG, "Initializing RF Receiver!");
+    on_asd_packet_callback = callback;
     example_wifi_init();
     example_espnow_init();
 
