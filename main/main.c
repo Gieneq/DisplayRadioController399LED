@@ -1,9 +1,3 @@
-/*
- * SPDX-FileCopyrightText: 2010-2022 Espressif Systems (Shanghai) CO LTD
- *
- * SPDX-License-Identifier: CC0-1.0
- */
-
 #include <stdio.h>
 #include <string.h>
 #include <inttypes.h>
@@ -82,40 +76,16 @@ void app_main(void) {
 
     ws2812b_grid_interface_t* grid_if = NULL;
 
-    uint32_t idx = 0;
-
     while(1) {
-
-        const led_matrix_t* received_led_matrix = asd_packets_processor_poll_completed_led_matrix();
-        if (received_led_matrix != NULL) {
-            led_matrix_clear(workspace_led_matrix); // TODO remove
-            memcpy(workspace_led_matrix, received_led_matrix, sizeof(led_matrix_t));
-        }
-        
-
-        // for (uint16_t idx_y = 0; idx_y < LED_MATRIX_ROWS; ++idx_y) {
-        //     for (uint16_t idx_x = 0; idx_x < LED_MATRIX_COLUMNS; ++idx_x) {
-        //         idx += 3;
-        //         idx ^= 1 + 4 + 16 + 64 + 256;
-        //         idx *= 17;
-        //         idx ^= 123;
-        //         led_matrix_access_pixel_at(workspace_led_matrix, idx_x, idx_y)->blue = idx & 0x0F;
-        //         led_matrix_access_pixel_at(workspace_led_matrix, idx_x, idx_y)->red = (idx>>8) & 0x0F;
-        //         led_matrix_access_pixel_at(workspace_led_matrix, idx_x, idx_y)->green = (idx>>16) & 0x0F;
-        //     }
-        // }
-
-        if (ws2812b_grid_access(&grid_if, 100)) {
+        if (ws2812b_grid_access(&grid_if, portMAX_DELAY)) {
             grid_if->set_led_matrix_values(workspace_led_matrix);
             ws2812b_grid_release();
             grid_if = NULL;
         }
 
-        vTaskDelay(10);
-        ESP_LOGV(TAG, "MEM available: Any=%u B, DMA=%u B, SPI=%u B.", 
-            heap_caps_get_free_size(MALLOC_CAP_8BIT),
-            heap_caps_get_free_size(MALLOC_CAP_DMA),
-            heap_caps_get_free_size(MALLOC_CAP_SPIRAM)
-        );
+        const led_matrix_t* received_led_matrix = asd_packets_processor_wait_for_completed_led_matrix(portMAX_DELAY);
+        if (received_led_matrix != NULL) {
+            memcpy(workspace_led_matrix, received_led_matrix, sizeof(led_matrix_t));
+        }
     }
 }

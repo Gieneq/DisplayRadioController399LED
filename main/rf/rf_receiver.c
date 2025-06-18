@@ -54,10 +54,10 @@ static void example_espnow_recv_cb(const esp_now_recv_info_t *recv_info, const u
          * encrypted as peer-to-peer message or unencrypted over the broadcast channel.
          * Users can check the destination address to distinguish it.
          */
-        ESP_LOGI(TAG, "Receive broadcast ESPNOW data len=%d/%u", len, sizeof(asd_packet_t));
+        ESP_LOGV(TAG, "Receive broadcast ESPNOW data len=%d/%u", len, sizeof(asd_packet_t));
         if (len == sizeof(asd_packet_t)) {
             const asd_packet_t* incomming_packet = (const asd_packet_t*)data;
-            ESP_LOGI(TAG, "  Got transfer=%lu, packet=%u/%u, data_size=%u", 
+            ESP_LOGV(TAG, "  Got transfer=%lu, packet=%u/%u, data_size=%u", 
                 incomming_packet->transfer_idx,
                 incomming_packet->packet_idx,
                 incomming_packet->total_packets_count,
@@ -71,7 +71,7 @@ static void example_espnow_recv_cb(const esp_now_recv_info_t *recv_info, const u
 
 
     } else {
-        ESP_LOGI(TAG, "Receive unicast ESPNOW data");
+        ESP_LOGW(TAG, "Receive unicast ESPNOW data");
     }
 }
 
@@ -98,8 +98,6 @@ static esp_err_t example_espnow_init(void) {
     memcpy(peer->peer_addr, s_example_broadcast_mac, ESP_NOW_ETH_ALEN);
     ESP_ERROR_CHECK( esp_now_add_peer(peer) );
     free(peer);
-
-    // xTaskCreate(example_espnow_task, "example_espnow_task", 2048, send_param, 4, NULL);
 
     return ESP_OK;
 }

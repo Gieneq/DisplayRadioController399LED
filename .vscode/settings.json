@@ -21,6 +21,7 @@
     "random": "c",
     "esp_netif.h": "c",
     "asd_packet.h": "c",
-    "compare": "c"
+    "compare": "c",
+    "event_groups.h": "c"
   }
 }

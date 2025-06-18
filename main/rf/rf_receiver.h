@@ -21,10 +21,6 @@ extern "C" {
 
 #define CONFIG_ESPNOW_CHANNEL 1
 
-// typedef struct led_matrix_t {
-//     uint32_t dummy;
-// } led_matrix_t;
-
 typedef void (*rf_receiver_on_receive_asd_packet_t)(const asd_packet_t*);
 
 esp_err_t rf_receiver_init(rf_receiver_on_receive_asd_packet_t callback);
