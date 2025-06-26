@@ -1,0 +1,111 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36" version="27.1.6">
+  <diagram name="Strona-1" id="BX-1SFBZ1i0kg9jK5hkX">
+    <mxGraphModel dx="2416" dy="2024" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-11" value="ESP32-C3 Receiver" style="swimlane;" parent="1" vertex="1">
+          <mxGeometry x="-20" y="-540" width="740" height="580" as="geometry">
+            <mxRectangle x="-20" y="-260" width="150" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-31" value="RF Receiver" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="sRf_iJZULk6RnhJr5Yu5-11" vertex="1">
+          <mxGeometry x="552" y="37" width="170" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-32" value="&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;ASD Packets listener with callback&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;↺ task: ESP-NOW packets listener&lt;/div&gt;&lt;div&gt;callback: every incomming&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;valid&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;packet, heavier operations should not be handled here&lt;/span&gt;&lt;/div&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;" parent="sRf_iJZULk6RnhJr5Yu5-31" vertex="1">
+          <mxGeometry y="50" width="170" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=3;" parent="sRf_iJZULk6RnhJr5Yu5-11" target="sRf_iJZULk6RnhJr5Yu5-32" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="790" y="100" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="790" y="167" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-17" value="" style="group;strokeWidth=3;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="745" y="-540" width="50" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-14" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=3;" parent="sRf_iJZULk6RnhJr5Yu5-17" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="25" y="50" as="sourcePoint" />
+            <mxPoint x="50" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-15" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=3;" parent="sRf_iJZULk6RnhJr5Yu5-17" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="25" y="50" as="sourcePoint" />
+            <mxPoint as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-28" value="" style="group" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="-278" y="-175" width="250" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-25" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.patternFillRect;fillStyle=diag;step=5;fillStrokeWidth=0.2;fillStrokeColor=#dddddd;strokeWidth=3;" parent="sRf_iJZULk6RnhJr5Yu5-28" vertex="1">
+          <mxGeometry x="20" width="210" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-26" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.patternFillRect;fillStyle=diag;step=5;fillStrokeWidth=0.2;fillStrokeColor=#dddddd;strokeWidth=3;" parent="sRf_iJZULk6RnhJr5Yu5-28" vertex="1">
+          <mxGeometry y="90" width="250" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-27" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.patternFillRect;fillStyle=diag;step=5;fillStrokeWidth=0.2;fillStrokeColor=#dddddd;strokeWidth=3;" parent="sRf_iJZULk6RnhJr5Yu5-28" vertex="1">
+          <mxGeometry x="30" y="10" width="190" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-35" value="ASD Packet Processor" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-5" y="-503" width="190" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-36" value="Merging packets and retriving LED Metrix, after receiving last packet, event is send&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;note: no task, must be called from outside, event driven result awaiting&lt;/div&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;" parent="sRf_iJZULk6RnhJr5Yu5-35" vertex="1">
+          <mxGeometry y="50" width="190" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;strokeWidth=3;" parent="1" source="sRf_iJZULk6RnhJr5Yu5-32" target="sRf_iJZULk6RnhJr5Yu5-36" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-33" value="ASD Packet" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="216" y="-490" width="280" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-34" value="ESP-NOW size transfer unit, used to send LED Matrix in chunks&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;type: asd_packet_builder_t: preallocated, used to split LED Matrix&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;into packets ready to be send&lt;/span&gt;&lt;/div&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;" parent="sRf_iJZULk6RnhJr5Yu5-33" vertex="1">
+          <mxGeometry y="50" width="280" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-29" value="LED Matrix" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="220" y="-313" width="270" height="136" as="geometry" />
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-30" value="Abstraction over 19x21 LEDs matrix&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;struct:&amp;nbsp;led_matrix_t holding RGB pixels of the matrix&lt;/div&gt;&lt;div&gt;interface: access individual pixels&lt;/div&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;" parent="sRf_iJZULk6RnhJr5Yu5-29" vertex="1">
+          <mxGeometry y="50" width="270" height="86" as="geometry" />
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=3;" parent="1" source="sRf_iJZULk6RnhJr5Yu5-19" target="sRf_iJZULk6RnhJr5Yu5-26" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-16" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=3;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="770" y="-440" as="sourcePoint" />
+            <mxPoint x="770" y="-540" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-55" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeWidth=3;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="90" y="-292" as="sourcePoint" />
+            <mxPoint x="541" y="-144" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="90" y="-169" />
+              <mxPoint x="541" y="-169" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-18" value="WS2812B Grid" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry y="-145" width="250" height="175" as="geometry" />
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-19" value="Controller of hardware 19x21 WS2812B LED matrix&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;↺&amp;nbsp;&lt;/span&gt;task: redraw matrix&lt;/div&gt;&lt;div&gt;shared resource: grid interface - API used to apply new leds matrix pixels, acquired and released&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;" parent="sRf_iJZULk6RnhJr5Yu5-18" vertex="1">
+          <mxGeometry y="50" width="250" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-37" value="Main" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="380" y="-145" width="322" height="175" as="geometry" />
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-38" value="Collecting packets and drawing LED Matrix&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;note: RF Receiver is used to pass packets to ASD Packet Processor&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;↺&amp;nbsp;&lt;/span&gt;task: Drawing temporary LED Matrix onto LEDs Display, awaiting incomming LED Matrix collected from packets from ASD Packet Processor&lt;/div&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;" parent="sRf_iJZULk6RnhJr5Yu5-37" vertex="1">
+          <mxGeometry y="50" width="322" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="sRf_iJZULk6RnhJr5Yu5-51" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;strokeWidth=3;" parent="1" source="sRf_iJZULk6RnhJr5Yu5-38" target="sRf_iJZULk6RnhJr5Yu5-19" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
